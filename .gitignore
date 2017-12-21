@@ -1,0 +1,8 @@
+#ignore dirs
+.idea/*
+npm-debug.log
+node_modules/*
+.env
+output*
+test*
+package.bak

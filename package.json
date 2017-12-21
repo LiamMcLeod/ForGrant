@@ -1,0 +1,23 @@
+{
+  "name": "nntest",
+  "version": "0.0.1",
+  "description": "NNTest",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "dual1ty <dual1tyx@hotmail.co.uk> (http://dual1ty.me)",
+  "license": "ISC",
+  "dependencies": {
+    "connect-pg-simple": "4.2.1",
+    "debug": "~3.1.0",
+    "dotenv": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "koa": "^2.4.1",
+    "morgan": "^1.9.0",
+    "neural-data-normalizer": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.0",
+    "psql-api": "^0.9.11"
+  }
+}
