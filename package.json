@@ -15,7 +15,9 @@
     "fs": "^0.0.1-security",
     "koa": "^2.4.1",
     "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
     "neural-data-normalizer": "^1.0.0",
+    "node-mysql": "^0.4.2",
     "path": "^0.12.7",
     "pg": "^7.4.0",
     "psql-api": "^0.9.11"
