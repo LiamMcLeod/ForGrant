@@ -38,54 +38,6 @@ var Neuron = synaptic.Neuron,
     Trainer = synaptic.Trainer,
     Architect = synaptic.Architect;
 
-// Data Normalise
-// var data = [
-//     {
-//         input: [0, 0, 0],
-//         output: [false]
-//     },
-//     {
-//         input: [0, 0, 1],
-//         output: [true]
-//     },
-//     {
-//         input: [0, 1, 0],
-//         output: [true]
-//     },
-//     {
-//         input: [0, 1, 1],
-//         output: [false]
-//     },
-//     {
-//         input: [1, 0, 0],
-//         output: [true]
-//     },
-//     {
-//         input: [1, 0, 1],
-//         output: [false]
-//     },
-//     {
-//         input: [1, 1, 1],
-//         output: [true]
-//     }
-// ];
-// var unData = [
-//     {input: [725, 50], output: [0]},
-//     {input: [746, 53], output: [0]},
-//     {input: [1084, 76], output: [0]},
-//     {input: [572, 39], output: [0]},
-//     {input: [735, 52], output: [1]},
-//     {input: [539, 52], output: [1]},
-//     {input: [1212, 77], output: [0]},
-//     {input: [676, 59], output: [0]},
-//     {input: [806, 46], output: [1]},
-//     {input: [1102, 62], output: [1]},
-//     {input: [762, 74], output: [1]},
-//     {input: [1292, 92], output: [0]},
-//     {input: [792, 58], output: [0]},
-//     {input: [966, 52], output: [1]},
-//     {input: [664, 41], output: [0]}
-// ];
 var data = [
     {
         input: [0.39960822722820766, 0.00026429056860227673],
@@ -178,19 +130,11 @@ normaliser.setOutputProperties(['output']);
 normaliser.normalize();
 
 const nbrInputs = normaliser.getInputLength();
-// console.log(nbrInputs);
 const nbrOutputs = normaliser.getOutputLength();
-// console.log(nbrOutputs);
 
 const metadata = normaliser.getDatasetMetaData();
-// console.log(metadata);
 const inputs = normaliser.getBinaryInputDataset();
-// console.log(inputs);
 const outputs = normaliser.getBinaryOutputDataset();
-// console.log(outputs);
-
-// console.log(normaliser.getBinaryInputDataset()[0]);
-// console.log(normaliser.getBinaryInputDataset()[1]);
 
 var trainingSet = [];
 
@@ -200,50 +144,29 @@ function normalised(data, bool) {
     }
     var i=0;
     if (bool === true) {
+        /** Start Raw Input **/
         for (i in inputs) {
             trainingSet.push({
                 input: data[i].input,
                 output: outputs[i]//[0]
             });
-            // console.log(trainingSet[i]);
         }
     } else {
+        /** Start Normalised Input **/
         for (i in inputs) {
             trainingSet.push({
                 input: inputs[i],
                 output: outputs[i]//[0]
             });
-            //console.log(trainingSet[i]);
         }
     }
 }
-
-/** Start Normalised Input **/
-// for (var i in inputs) {
-//     trainingSet.push({
-//         input: inputs[i],
-//         output: outputs[i]//[0]
-//     });
-//     //console.log(trainingSet[i]);
-// }
-/** End Normalised Input **/
-
-/** Start Raw Input **/
-// for (var i in inputs) {
-//     trainingSet.push({
-//         input: data[i].input,
-//         output: outputs[i]//[0]
-//     });
-//     // console.log(trainingSet[i]);
-// }
-/** End Raw Input **/
 
 normalised(data, true);
 
 var jarvisOut = [];
 
 /** perceptron(inputs, layers/hidden, outputs)**/
-// var network = new Architect.Perceptron(3, 3, 1);
 var network = new Architect.Perceptron(2, 3, 1);
 var trainer = new Trainer(network);
 /** train(set, options)**/
@@ -251,72 +174,26 @@ var test = trainer.train(trainingSet, {
     //error: .003,                           //Error Rate
     log: 1,
     rate: .001,                               //Learn rate
-    iterations: 5000000, //0,                    //1500000,
+    iterations: 5000000,                    //1500000,
     shuffle: true,
     cost: Trainer.cost.CROSS_ENTROPY        //Trainer.cost.CROSS_ENTROPY //Trainer.cost.MSE
 });
 
 /** Value between 0 and 1 **/
 var results = [];
-// results.push(network.activate([0, 0, 0]));
-// results.push(network.activate([0, 0, 1]));
-// results.push(network.activate([0, 1, 0]));
-// results.push(network.activate([0, 1, 1]));
-// results.push(network.activate([1, 0, 0]));
-// results.push(network.activate([1, 0, 1]));
-// results.push(network.activate([1, 1, 1]));
 results.push(network.activate([0.5935357492654261, 0.0001887789775730786])); //0
 results.push(network.activate([0.5205680705190989, 0.00007047748496058492])); //1
 console.log(results);
 
 jarvisOut = results;
-for (i = 0; i < results.length; i++) {
+for (var i = 0; i < results.length; i++) {
     jarvisOut[i] = results[i];
-    // if (i === 0) {
-    //     jarvisOut[i] = "000|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 1) {
-    //     jarvisOut[i] = "001|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 2) {
-    //     jarvisOut[i] = "010|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 3) {
-    //     jarvisOut[i] = "011|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 4) {
-    //     jarvisOut[i] = "100|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 5) {
-    //     jarvisOut[i] = "101|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
-    // if (i === 6) {
-    //     jarvisOut[i] = "111|" + invert(Math.round(results[i])) + " (" + results[i] + ")";
-    // }
 }
 
 /** For odd or even parity **/
 // @formatter:off
 function invert(n){return 0===n?1:0}
 // @formatter:on
-
-/** XOR Start **/
-// var network = new Architect.Perceptron(2, 3, 1);
-// var trainer = new Trainer(network);
-// trainer.XOR({
-//     iterations: 100000,
-//     error: .0001,
-//     rate: 1
-// });
-// var jarvisOut =[];
-// jarvisOut.push(network.activate([0,0]));
-// jarvisOut.push(network.activate([0,1]));
-// jarvisOut.push(network.activate([1,0]));
-// jarvisOut.push(network.activate([1,1]));
-// jarvisOut.push(network);
-// jarvisOut.push(trainer);
-// console.log(jarvisOut);
-/** XOR End **/
 
 var contentBody = 'Hello World';
 contentBody = '<h1> Data </h1>';
